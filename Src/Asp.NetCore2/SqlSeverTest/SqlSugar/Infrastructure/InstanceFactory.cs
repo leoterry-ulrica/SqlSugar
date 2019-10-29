@@ -229,6 +229,10 @@ namespace SqlSugar
             {
                 return new PostgreSQLInserttable<T>();
             }
+            else if(currentConnectionConfig.DbType == DbType.Dm)
+            {
+                return new DmInsertable<T>();
+            }
             else
             {
                 return new InsertableProvider<T>();

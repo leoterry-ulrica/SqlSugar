@@ -341,6 +341,9 @@ namespace SqlSugar
                 case DbType.PostgreSQL:
                     DependencyManagement.TryPostgreSQL();
                     break;
+                case DbType.Dm:
+                    DependencyManagement.TryDm();
+                    break;
                 default:
                     throw new Exception("ConnectionConfig.DbType is null");
             }

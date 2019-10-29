@@ -42,6 +42,10 @@ namespace SqlSugar
             {
                 throw new Exception("Oracle Subquery can't OrderBy");
             }
+            if (this.Context is DmExpressionContext)
+            {
+                throw new Exception("Dameng Subquery can't OrderBy");
+            }
             var exp = expression as MethodCallExpression;
             var argExp = exp.Arguments[0];
             var result = "ORDER BY " + SubTools.GetMethodValue(this.Context, argExp, ResolveExpressType.FieldSingle);

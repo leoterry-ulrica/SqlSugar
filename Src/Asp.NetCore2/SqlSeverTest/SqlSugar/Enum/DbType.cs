@@ -11,6 +11,10 @@ namespace SqlSugar
         SqlServer,
         Sqlite,
         Oracle,
-        PostgreSQL
+        PostgreSQL,
+        /// <summary>
+        /// 达梦数据库
+        /// </summary>
+        Dm
     }
 }

@@ -39,7 +39,7 @@ namespace SqlSugar
                 {
                     return 150;
                 }
-                else if (this.Context is OracleExpressionContext) {
+                else if (this.Context is OracleExpressionContext || this.Context is DmExpressionContext) {
 
                     return 401;
                 }
@@ -57,7 +57,7 @@ namespace SqlSugar
             {
                 return "TOP 1";
             }
-            else if (this.Context is OracleExpressionContext)
+            else if (this.Context is OracleExpressionContext || this.Context is DmExpressionContext)
             {
                 return (HasWhere?"AND":"WHERE")+ " ROWNUM=1";
             }

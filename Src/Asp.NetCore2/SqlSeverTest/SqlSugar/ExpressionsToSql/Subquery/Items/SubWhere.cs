@@ -45,7 +45,7 @@ namespace SqlSugar
 
 
             var regex = @"^WHERE  (\@Const\d+) $";
-            if (this.Context is OracleExpressionContext)
+            if (this.Context is OracleExpressionContext || this.Context is DmExpressionContext)
             {
                 regex = @"^WHERE  (\:Const\d+) $";
             }
@@ -54,7 +54,6 @@ namespace SqlSugar
                 result = "WHERE " + this.Context.Parameters.First(it => it.ParameterName == Regex.Match(result, regex).Groups[1].Value).Value;
                 return result;
             }
-
             var selfParameterName = Context.GetTranslationColumnName((argExp as LambdaExpression).Parameters.First().Name)+UtilConstants.Dot;
             result = result.Replace(selfParameterName,SubTools.GetSubReplace(this.Context));
             return result;

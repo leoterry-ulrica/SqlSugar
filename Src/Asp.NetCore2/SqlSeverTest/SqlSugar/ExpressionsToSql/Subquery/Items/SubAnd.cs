@@ -45,7 +45,7 @@ namespace SqlSugar
 
 
             var regex = @"^AND  (\@Const\d+) $";
-            if (this.Context is OracleExpressionContext)
+            if (this.Context is OracleExpressionContext || this.Context is DmExpressionContext)
             {
                 regex = @"^AND  (\:Const\d+) $";
             }
