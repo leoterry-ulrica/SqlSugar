@@ -29,7 +29,7 @@ namespace SqlSugar
             {
                 return "int";
             }
-            else if (dbTypeName == "int64")
+            else if (dbTypeName == "int64" || dbTypeName == "bigint")
             {
                 return "long";
             }
@@ -84,7 +84,7 @@ namespace SqlSugar
                   new KeyValuePair<string, CSharpDataType>("integer",CSharpDataType.@int),
                   new KeyValuePair<string, CSharpDataType>("interval year to  month",CSharpDataType.@int),
                   new KeyValuePair<string, CSharpDataType>("interval day to  second",CSharpDataType.@int),
-
+                  new KeyValuePair<string, CSharpDataType>("bigint",CSharpDataType.@long),
                   new KeyValuePair<string, CSharpDataType>("number",CSharpDataType.@int),
                   new KeyValuePair<string, CSharpDataType>("number",CSharpDataType.@float),
                   new KeyValuePair<string, CSharpDataType>("number",CSharpDataType.@short),
