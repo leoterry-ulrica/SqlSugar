@@ -31,6 +31,47 @@ namespace SqlSugar
         public override string SqlTemplateBatchUnion => " VALUES ";
 
         public override string SqlTemplateBatchSelect => " {0} ";
+        public override object FormatValue(object value)
+        {
+            if (value == null)
+            {
+                return "NULL";
+            }
+            else
+            {
+                var type = value.GetType();
+                if (type == UtilConstants.DateType)
+                {
+                    var date = value.ObjToDate();
+                    if (date < Convert.ToDateTime("1900-1-1"))
+                    {
+                        date = Convert.ToDateTime("1900-1-1");
+                    }
+                    return "'" + date.ToString("yyyy-MM-dd HH:mm:ss.fff") + "'";
+                }
+                else if (type == UtilConstants.ByteArrayType)
+                {
+                    string bytesString = "0x" + BitConverter.ToString((byte[])value);
+                    return bytesString;
+                }
+                else if (type.IsEnum())
+                {
+                    return Convert.ToInt64(value);
+                }
+                else if (type == UtilConstants.BoolType)
+                {
+                    return value.ObjToBool() ? "1" : "0";
+                }
+                else if (type == UtilConstants.StringType || type == UtilConstants.ObjType)
+                {
+                    return value.ToString().ToSqlFilter();
+                }
+                else
+                {
+                    return value.ToString();
+                }
+            }
+        }
 
         public override string ToSqlString()
         {
@@ -79,12 +120,12 @@ namespace SqlSugar
                             {
                                 return string.Format(SqlTemplateBatchSelect, "NULL");
                             }
-                            return string.Format(SqlTemplateBatchSelect, "'" + value + "'");
+                            return string.Format(SqlTemplateBatchSelect, "'" + FormatValue(value) + "'");
                         })) + "),");
                         ++i;
                     }
                     pageIndex++;
-                    batchInsetrSql.Remove(batchInsetrSql.Length - 1,1).Append("\r\n;\r\n");
+                    batchInsetrSql.Remove(batchInsetrSql.Length - 1, 1).Append("\r\n;\r\n");
                 }
                 return batchInsetrSql.ToString();
             }
